@@ -23,10 +23,10 @@
    <version>1.0-SNAPSHOT</version>
    <packaging>jar</packaging>
 
-   <name>Basic Maven Project</name>
-   <description>A Maven project created from the library archetype.</description>
-   <url>https://github.com/bernardo-mg/nicefx</url>
-   <inceptionYear>2020</inceptionYear>
+   <name>NiceFX</name>
+   <description>A library to ease the development of JavaFX desktop applications.</description>
+   <url>https://github.com/OssNass/NiceFX</url>
+   <inceptionYear>2021</inceptionYear>
 
    <licenses>
       <license>
@@ -41,20 +41,20 @@
    <!-- ********************************************** -->
 
    <scm>
-      <connection>scm:git:https://github.com/bernardo-mg/nicefx.git</connection>
-      <developerConnection>scm:git:https://github.com/bernardo-mg/nicefx.git</developerConnection>
+      <connection>scm:git:https://github.com/OssNass/NiceFX.git</connection>
+      <developerConnection>scm:git:https://github.com/OssNass/NiceFX.git</developerConnection>
       <tag>head</tag>
-      <url>https://www.github.com/bernardo-mg/nicefx</url>
+      <url>https://github.com/OssNass/NiceFX</url>
    </scm>
 
    <issueManagement>
       <system>GitHub</system>
-      <url>https://www.github.com/bernardo-mg/nicefx/issues</url>
+      <url>https://github.com/OssNass/NiceFX/issues</url>
    </issueManagement>
 
    <ciManagement>
       <system>Github</system>
-      <url>https://www.github.com/bernardo-mg/nicefx/actions</url>
+      <url>https://github.com/OssNass/NiceFX/actions</url>
       <notifiers />
    </ciManagement>
 
@@ -166,22 +166,22 @@
    <!-- ********************************************** -->
 
    <organization>
-      <name>Bernardo Martínez Garrido</name>
-      <url>https://github.com/Bernardo-MG</url>
+      <name>Ossama Nasser</name>
+      <url>https://github.com/OssNass</url>
    </organization>
 
    <developers>
       <developer>
-         <id>bmg</id>
-         <name>Bernardo Martínez Garrido</name>
-         <email>programming@bernardomg.com</email>
-         <url>https://github.com/Bernardo-MG</url>
-         <organization>Bernardo Martínez Garrido</organization>
-         <organizationUrl>https://github.com/Bernardo-MG</organizationUrl>
+         <id>on</id>
+         <name>Ossama Nasser</name>
+         <email>ossnass@gmail.com</email>
+         <url>https://github.com/OssNass</url>
+         <organization>Ossama Nasser</organization>
+         <organizationUrl>hhttps://github.com/OssNass</organizationUrl>
          <roles>
             <role>Developer</role>
          </roles>
-         <timezone>+1</timezone>
+         <timezone>+2</timezone>
          <properties />
       </developer>
    </developers>
@@ -194,7 +194,7 @@
       <!-- ============================================== -->
       <!-- ================ JAVA VERSION ================ -->
       <!-- ============================================== -->
-      <java.version>1.8</java.version>
+      <java.version>11</java.version>
       <!-- ============================================== -->
       <!-- =============== MANIFEST DATA ================ -->
       <!-- ============================================== -->
@@ -211,7 +211,6 @@
       <!-- ================= MAVEN SITE ================= -->
       <!-- ============================================== -->
       <site.skin.version>2.0.11</site.skin.version>
-      <bintrayURL>https://bintray.com/bernardo-mg/maven/nicefx/view</bintrayURL>
       <mavenURL>http://mvnrepository.com/artifact/${project.groupId}/${project.artifactId}</mavenURL>
    </properties>
 
@@ -233,6 +232,11 @@
    </dependencyManagement>
 
    <dependencies>
+      <dependency>
+         <groupId>org.openjfx</groupId>
+         <artifactId>javafx-controls</artifactId>
+         <version>11.0.2</version>
+      </dependency>
       <dependency>
          <!-- Guava -->
          <groupId>com.google.guava</groupId>
