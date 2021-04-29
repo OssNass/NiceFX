@@ -23,7 +23,7 @@ import javafx.stage.Stage;
  * <li>The main pane where all the nodes resides must extend the
  * {@link javafx.scene.layout.Pane} and have the id of <b>root</b></li>
  * <li>If this controller gets its own stage, in the language file you must have
- * the key <b>STAGE.ControllerName.TITLE</b> present with value, check
+ * the key <b>STAGE.ControllerName.TITLE</b> present with the value, check
  * {@link language} for more info</li>
  * </ol>
  * 
@@ -42,7 +42,7 @@ public abstract class Controller {
 	protected ResourceBundle language;
 
 	@FXML
-	public void initialize(ResourceBundle language) {
+	private void initialize(ResourceBundle language) {
 		this.language = language;
 		userInit();
 	}
@@ -51,7 +51,7 @@ public abstract class Controller {
 
 	}
 
-	void onStageChange(ObservableValue<Stage> observable, Stage oldValue, Stage newValue) {
+	void onStageChange(ObservableValue<? extends Stage> observable, Stage oldValue, Stage newValue) {
 		if (oldValue != null) {
 			oldValue.setScene(null);
 		}
@@ -60,7 +60,7 @@ public abstract class Controller {
 		}
 	}
 
-	void onSceneChange(ObservableValue<Scene> observable, Scene oldValue, Scene newValue) {
+	void onSceneChange(ObservableValue<? extends Scene> observable, Scene oldValue, Scene newValue) {
 		if (oldValue != null) {
 			oldValue.setRoot(null);
 		}
@@ -73,14 +73,14 @@ public abstract class Controller {
 
 	}
 
-	void onIconChange(ObservableValue<String> observable, String oldValue, String newValue) {
+	void onIconChange(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 		if (stage.isNotNull().get()) {
 			stage.get().getIcons().clear();
 //			stage.get().getIcons().add(newValue);
 		}
 	}
 
-	void onExtraCSSChange(ObservableValue<String> observable, String oldValue, String newValue) {
+	void onExtraCSSChange(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 
 	}
 
@@ -90,15 +90,14 @@ public abstract class Controller {
 		if (!this.getClass().isAnnotationPresent(ControllerInfo.class)) {
 			throw new ControllerNotAnnotatedException(this.getClass().getCanonicalName());
 		}
-		icon = new SimpleStringProperty(this.getClass().getAnnotation(ControllerInfo.class).Icon());
+		icon = new SimpleStringProperty(this.getClass().getAnnotation(ControllerInfo.class).icon());
 		icon.addListener(this::onIconChange);
-		extraCSSFile = new SimpleStringProperty(this.getClass().getAnnotation(ControllerInfo.class).ExtraCSS());
+		extraCSSFile = new SimpleStringProperty(this.getClass().getAnnotation(ControllerInfo.class).extraCSS());
 		extraCSSFile.addListener(this::onExtraCSSChange);
 		stage = new SimpleObjectProperty<Stage>();
 		stage.addListener(this::onStageChange);
 		scene = new SimpleObjectProperty<Scene>();
 		scene.addListener(this::onSceneChange);
-
 	}
 
 	/**
@@ -172,29 +171,56 @@ public abstract class Controller {
 		return this;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+
 	public SimpleObjectProperty<Scene> sceneProperty() {
 		return this.scene;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public Scene getScene() {
 		return this.scene.get();
 	}
 
+	/**
+	 * 
+	 * @param scene
+	 * @return
+	 */
 	public Controller setScene(Scene scene) {
 		this.scene.set(scene);
 		return this;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public SimpleObjectProperty<Stage> stageProperty() {
 		return this.stage;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public Stage getStage() {
 		return this.stage.get();
 	}
 
+	/**
+	 * 
+	 * @param stage
+	 * @return
+	 */
 	public Controller setStage(Stage stage) {
-		this.stage	.set(stage);
+		this.stage.set(stage);
 		return this;
 	}
 
