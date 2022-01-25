@@ -6,4 +6,13 @@ package io.github.ossnass.nicefx;
  */
 public class ControlMaster {
 
+    private ControlMaster(){
+
+    }
+
+    private static final ControlMaster INSTANCE = new ControlMaster();
+
+    public static ControlMaster get(){
+        return INSTANCE;
+    }
 }

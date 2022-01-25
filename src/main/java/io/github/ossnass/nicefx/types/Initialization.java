@@ -1,4 +1,4 @@
-package io.github.ossnass.nicefx;
+package io.github.ossnass.nicefx.types;
 
 /**
  * This enumeration is used to describe how to initialize a {@link Controller}.

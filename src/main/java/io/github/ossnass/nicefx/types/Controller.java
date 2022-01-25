@@ -1,12 +1,12 @@
-package io.github.ossnass.nicefx;
+package io.github.ossnass.nicefx.types;
 
 import java.util.ResourceBundle;
 
+import io.github.ossnass.nicefx.Language;
+import io.github.ossnass.nicefx.types.exceptions.ControllerNotAnnotatedException;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -24,20 +24,40 @@ import javafx.stage.Stage;
  * {@link javafx.scene.layout.Pane} and have the id of <b>root</b></li>
  * <li>If this controller gets its own stage, in the language file you must have
  * the key <b>STAGE.ControllerName.TITLE</b> present with the value, check
- * {@link language} for more info</li>
+ * {@link io.github.ossnass.nicefx.Language} for more info</li>
  * </ol>
  * 
  * @author Ossama Nasser <ossnass@gmail.com>
  */
 public abstract class Controller {
+	/**
+	 * The main node of the GUI
+	 */
 	@FXML
 	protected Pane root;
+	/**
+	 * The icon of the stage
+	 */
 	protected SimpleStringProperty icon;
+	/**
+	 * This stage extra CSS file
+	 */
 	protected SimpleStringProperty extraCSSFile;
 
+	/**
+	 * The current scene on which the nodes are drawn
+	 */
 	protected SimpleObjectProperty<Scene> scene;
+	/**
+	 * The stage in which everything is shown
+	 */
 	protected SimpleObjectProperty<Stage> stage;
 
+	private String Id;
+
+	/**
+	 * The language data
+	 */
 	@FXML
 	protected ResourceBundle language;
 
@@ -47,19 +67,57 @@ public abstract class Controller {
 		userInit();
 	}
 
+	/**
+	 * Must be overridden by the user to add custom initialization code which will be run after the internal initilization code
+	 */
 	protected void userInit() {
 
 	}
 
+	/**
+	 * The id of the controller
+	 * @return the id of the controller
+	 */
+	public String getId() {
+		return Id;
+	}
+
+	/**
+	 * Changes the Id of the controller
+	 * @param id the new id of the controller
+	 * @return A controller
+	 * @throws IllegalStateException if trying to change an already set Id
+	 *
+	 */
+	public Controller setId(String id) {
+		if(Id!=null)
+			throw new IllegalStateException("Cannot change controller Id");
+		Id = id;
+		return this;
+	}
+
+	/**
+	 * The codes gets executed when changing the stage
+	 * @param observable
+	 * @param oldValue
+	 * @param newValue
+	 */
 	void onStageChange(ObservableValue<? extends Stage> observable, Stage oldValue, Stage newValue) {
 		if (oldValue != null) {
 			oldValue.setScene(null);
 		}
 		if (newValue != null && scene.isNotNull().get()) {
 			newValue.setScene(scene.get());
+			newValue.setTitle(language.getString(String.format(Language.WINDOW_TITLE,Id)));
 		}
 	}
 
+	/**
+	 * The codes gets executed when changing the scene
+	 * @param observable
+	 * @param oldValue
+	 * @param newValue
+	 */
 	void onSceneChange(ObservableValue<? extends Scene> observable, Scene oldValue, Scene newValue) {
 		if (oldValue != null) {
 			oldValue.setRoot(null);
@@ -68,11 +126,18 @@ public abstract class Controller {
 			newValue.setRoot(root);
 			if (stage.isNotNull().get()) {
 				stage.get().setScene(newValue);
+				newValue.getStylesheets();
 			}
 		}
 
 	}
 
+	/**
+	 * The codes gets executed when changing the icon
+	 * @param observable
+	 * @param oldValue
+	 * @param newValue
+	 */
 	void onIconChange(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 		if (stage.isNotNull().get()) {
 			stage.get().getIcons().clear();
@@ -80,10 +145,19 @@ public abstract class Controller {
 		}
 	}
 
+	/**
+	 * The codes gets executed when changing the CSS file
+	 * @param observable
+	 * @param oldValue
+	 * @param newValue
+	 */
 	void onExtraCSSChange(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 
 	}
 
+	/**
+	 * Creates a new Controller
+	 */
 	public Controller() {
 		// Prevents the creation of the controller if is not annotated with
 		// ContollerInfo
@@ -172,8 +246,8 @@ public abstract class Controller {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Returns the current scene property
+	 * @returnthe current scene property
 	 */
 
 	public SimpleObjectProperty<Scene> sceneProperty() {
@@ -181,17 +255,17 @@ public abstract class Controller {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Returns the current scene
+	 * @return the current scene
 	 */
 	public Scene getScene() {
 		return this.scene.get();
 	}
 
 	/**
-	 * 
-	 * @param scene
-	 * @return
+	 * Changes the current scene
+	 * @param scene the new scene
+	 * @return the Controller after chaning the scene
 	 */
 	public Controller setScene(Scene scene) {
 		this.scene.set(scene);
@@ -199,25 +273,25 @@ public abstract class Controller {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Returns the current stage property
+	 * @return the current stage property
 	 */
 	public SimpleObjectProperty<Stage> stageProperty() {
 		return this.stage;
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Returns the current stage
+	 * @return the current stage
 	 */
 	public Stage getStage() {
 		return this.stage.get();
 	}
 
 	/**
-	 * 
-	 * @param stage
-	 * @return
+	 * Changes the current stage
+	 * @param stage the new stage
+	 * @return the Controller after chaning the stage
 	 */
 	public Controller setStage(Stage stage) {
 		this.stage.set(stage);

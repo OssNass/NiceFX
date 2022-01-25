@@ -1,9 +1,7 @@
-package io.github.ossnass.nicefx;
+package io.github.ossnass.nicefx.actions;
 
-import javafx.collections.FXCollections;
+import io.github.ossnass.nicefx.types.Controller;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
-import javafx.scene.input.KeyCombination;
 
 /**
  * 

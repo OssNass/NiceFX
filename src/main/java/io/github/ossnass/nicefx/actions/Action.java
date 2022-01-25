@@ -1,4 +1,4 @@
-package io.github.ossnass.nicefx;
+package io.github.ossnass.nicefx.actions;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
